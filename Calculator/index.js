@@ -1,27 +1,27 @@
-let display = document.getElementById('out')
-let buttons = Array.from(document.getElementsByClassName('button'))
+let input = document.getElementById('inputBox');
+let buttons = document.querySelectorAll('button');
 
-buttons.map((button)=>{
-    button.addEventListener('click', (e)=>{
-        switch(e.target.innerText){
-            case 'Clear':
-                display.innerText = '';
-                break;
-            case '=':
-                try{
-                    display.innerText = eval(display.innerText);
-                } catch {
-                    display.innerText = "Error"
-                }
-                break;
-            case 'Del':
-                if (display.innerText){
-                    display.innerText = display.innerText.slice(0, -1);
-                }
-                break;
-            default:
-                display.innerText += e.target.innerText;
+let string = "";
+let arr = Array.from(buttons);
+arr.forEach(button => {
+    button.addEventListener('click', (e) =>{
+        if(e.target.innerHTML == '='){
+            string = eval(string);
+            input.value = string;
         }
-    });
-    
-}); 
+
+        else if(e.target.innerHTML == 'AC'){
+            string = "";
+            input.value = string;
+        }
+        else if(e.target.innerHTML == 'DEL'){
+            string = string.substring(0, string.length-1);
+            input.value = string;
+        }
+        else{
+            string += e.target.innerHTML;
+            input.value = string;
+        }
+        
+    })
+})
